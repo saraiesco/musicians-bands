@@ -14,107 +14,73 @@ describe('Band, Musician, and Song Models', () => {
 
     test('can create a Band', async () => {
         // TODO - test creating a band
-        const band = await Band.create({
-            name: "Foo Fighters",
-            genre: "Rock",
-        })
-        expect(band.name).toBe('Foo Fighters');
+        const testBand = await Band.create({name: 'Nirvana', genre: 'Alternative Rock'})
+        expect(testBand.name).toBe('Nirvana');
     })
 
     test('can create a Musician', async () => {
         // TODO - test creating a musician
-        const musician = await Musician.create({
-            name: "Beethovan",
-            instrument: "Piano"
-        })
-        expect(musician.instrument).toBe('Piano');
+        const testMusician = await Musician.create({name: 'Hendrix', instrument: 'Guitar'})
+        expect(testMusician.instrument).toBe('Guitar');
     })
 
     test('can create a Song', async () => {
-        // TODO - test creating a song
-        const song = await Song.create({
-            title: "26",
-            year: 2018,
-            length: 4
-        })
-        expect(song.title).toBe("26");
+        // TODO - test creating a musician
+        const testSong = await Song.create({title: 'Survivor', year: 2018, length: 3})
+        expect(testSong.title).toBe('Survivor');
     })
 
     test('can update a Band', async () => {
         // TODO - test updating a band
-        const band1 = await Band.create({
-            name: "Vampire Weekend",
-            genre: "Indie",
-        })
-        await band1.update({genre: "Indie-rock"})
-        expect(band1.genre).toBe('Indie-rock');
+        const nBand = await Band.create({name: 'Nirvana', genre: 'Punk Rock'})
+        const updatedBand = await nBand.update(
+            {
+                genre: 'Alternative Rock'
+            }
+        )
+        expect(updatedBand.genre).toBe('Alternative Rock');
     })
 
     test('can update a Musician', async () => {
         // TODO - test updating a musician
-        const musician1 = await Musician.create({
-            name: "Lindsey Sterling",
-            instrument: "Violin"
-        })
-        await musician1.update({name: "Kevin Sylvester"})
-        expect(musician1.name).toBe('Kevin Sylvester');
+        const nMusician = await Musician.create({name: 'Beethoven', instrument: 'Horn'})
+        const updatedMusician = await nMusician.update(
+            {
+                instrument: 'Piano'
+            }
+        )
+        expect(updatedMusician.instrument).toBe('Piano');
     })
 
     test('can update a Song', async () => {
-        // TODO - test updating a song
-        const song1 = await Song.create({
-            title: "Spice Girl",
-            year: 2018,
-            length: 4
-        })
-        await song1.update({title: "HeebieJeebies"})
-        expect(song1.title).toBe('HeebieJeebies');
+        // TODO - test updating a musician
+        const nSong = await Song.create({title: 'Survivor', year: 2018, length: 3})
+        const updatedSong = await nSong.update(
+            {
+                title: 'Lost Soul Survivor'
+            }
+        )
+        expect(updatedSong.title).toBe('Lost Soul Survivor');
     })
 
     test('can delete a Band', async () => {
         // TODO - test deleting a band
-        const bandDESTROY = await Band.create({
-            name: "Panic! at the Disco",
-            genre: "Rock",
-        })
-        const bandUrOkay = await Band.create({
-            name: "Daft Punk",
-            genre: "Electronic",
-        })
-        const toExterminate = await Band.findByPk(1)
-        toExterminate.destroy();
-        expect(toExterminate.id).toBe(1);
+        const dBand = await Band.create({name: 'Aerosmith', genre: 'Rock'})
+        const noBand = await dBand.destroy()
+        expect(noBand).toBe(dBand);
     })
 
     test('can delete a Musician', async () => {
         // TODO - test deleting a musician
-        const musicianSave = await Musician.create({
-            name: "Lisa Simpson",
-            instrument: "Saxophone"
-        })
-        const musicianDelete = await Musician.create({
-            name: "Sarai Escobar",
-            instrument: "Saxophone"
-        })
-        const deleted = await Musician.findByPk(2)
-        deleted.destroy();
-        expect(deleted.id).toBe(2);
+        const dMusician = await Musician.create({name: 'Yo-Yo Ma', instrument: 'Chello'})
+        const noMusician = await dMusician.destroy()
+        expect(noMusician).toBe(dMusician);
     })
 
     test('can delete a Song', async () => {
-        // TODO - test deleting a song
-        const songDestroy = await Song.create({
-            title: "Thriller",
-            year: 1982,
-            length: 6
-        })
-        const songKeep = await Song.create({
-            title: "Superstition",
-            year: 1972,
-            length: 3
-        })
-        const goodbye = await Song.findByPk(1)
-        goodbye.destroy();
-        expect(goodbye.id).toBe(1);
+        // TODO - test deleting a musician
+        const dSong = await Song.create({title: 'Put it on me', year: 2022, length: 2})
+        const noSong = await dSong.destroy()
+        expect(noSong).toBe(dSong);
     })
 })
