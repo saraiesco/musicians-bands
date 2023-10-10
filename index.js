@@ -4,7 +4,6 @@ const { Song } = require("./models/Song")
 // Define associations here
 
 
-
 module.exports = {
     Band,
     Musician,
