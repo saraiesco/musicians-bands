@@ -14,73 +14,40 @@ describe('Band, Musician, and Song Models', () => {
 
     test('can create a Band', async () => {
         // TODO - test creating a band
-        const testBand = await Band.create({name: 'Nirvana', genre: 'Alternative Rock'})
-        expect(testBand.name).toBe('Nirvana');
+        const Queen = await Band.create({name: "Queen", genre: "rock"})
+        expect(Queen.name).toBe("Queen");
     })
 
     test('can create a Musician', async () => {
         // TODO - test creating a musician
-        const testMusician = await Musician.create({name: 'Hendrix', instrument: 'Guitar'})
-        expect(testMusician.instrument).toBe('Guitar');
-    })
-
-    test('can create a Song', async () => {
-        // TODO - test creating a musician
-        const testSong = await Song.create({title: 'Survivor', year: 2018, length: 3})
-        expect(testSong.title).toBe('Survivor');
+        const marthaArgerich = await Musician.create({name: "Martha Argerich", instrument: "Piano"})
+        expect(marthaArgerich.name).toBe("Martha Argerich");
     })
 
     test('can update a Band', async () => {
         // TODO - test updating a band
-        const nBand = await Band.create({name: 'Nirvana', genre: 'Punk Rock'})
-        const updatedBand = await nBand.update(
-            {
-                genre: 'Alternative Rock'
-            }
-        )
-        expect(updatedBand.genre).toBe('Alternative Rock');
+        const foundBand = await Band.findByPk(1)
+        const updateResult = await foundBand.update({name: "Destiny's Child", genre: "R&B/Soul"})
+        expect(updateResult.genre).toBe("R&B/Soul");
     })
 
     test('can update a Musician', async () => {
         // TODO - test updating a musician
-        const nMusician = await Musician.create({name: 'Beethoven', instrument: 'Horn'})
-        const updatedMusician = await nMusician.update(
-            {
-                instrument: 'Piano'
-            }
-        )
-        expect(updatedMusician.instrument).toBe('Piano');
-    })
-
-    test('can update a Song', async () => {
-        // TODO - test updating a musician
-        const nSong = await Song.create({title: 'Survivor', year: 2018, length: 3})
-        const updatedSong = await nSong.update(
-            {
-                title: 'Lost Soul Survivor'
-            }
-        )
-        expect(updatedSong.title).toBe('Lost Soul Survivor');
+        const foundMusician = await Musician.findOne({where: {name: "Martha Argerich"}})
+        const updateResult = await foundMusician.update({name: "Pablo Casals", instrument: "Cello"})
+        expect(updateResult.name).toBe("Pablo Casals");
     })
 
     test('can delete a Band', async () => {
         // TODO - test deleting a band
-        const dBand = await Band.create({name: 'Aerosmith', genre: 'Rock'})
-        const noBand = await dBand.destroy()
-        expect(noBand).toBe(dBand);
+        const deletedBand = await Band.destroy({where: {name: "Destiny's Child"}})
+        expect(deletedBand).toBe(1);
     })
 
     test('can delete a Musician', async () => {
         // TODO - test deleting a musician
-        const dMusician = await Musician.create({name: 'Yo-Yo Ma', instrument: 'Chello'})
-        const noMusician = await dMusician.destroy()
-        expect(noMusician).toBe(dMusician);
-    })
-
-    test('can delete a Song', async () => {
-        // TODO - test deleting a musician
-        const dSong = await Song.create({title: 'Put it on me', year: 2022, length: 2})
-        const noSong = await dSong.destroy()
-        expect(noSong).toBe(dSong);
+        const foundMusician = await Musician.findOne({where: {name: "Pablo Casals"}})
+        const deletedMusician = await foundMusician.destroy()
+        expect(deletedMusician).toBe(foundMusician);
     })
 })
