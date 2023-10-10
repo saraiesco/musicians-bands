@@ -14,31 +14,73 @@ describe('Band, Musician, and Song Models', () => {
 
     test('can create a Band', async () => {
         // TODO - test creating a band
-        expect('NO TEST').toBe('EXPECTED VALUE HERE');
+        const testBand = await Band.create({name: 'Nirvana', genre: 'Alternative Rock'})
+        expect(testBand.name).toBe('Nirvana');
     })
 
     test('can create a Musician', async () => {
         // TODO - test creating a musician
-        expect('NO TEST').toBe('EXPECTED VALUE HERE');
+        const testMusician = await Musician.create({name: 'Hendrix', instrument: 'Guitar'})
+        expect(testMusician.instrument).toBe('Guitar');
+    })
+
+    test('can create a Song', async () => {
+        // TODO - test creating a musician
+        const testSong = await Song.create({title: 'Survivor', year: 2018, length: 3})
+        expect(testSong.title).toBe('Survivor');
     })
 
     test('can update a Band', async () => {
         // TODO - test updating a band
-        expect('NO TEST').toBe('EXPECTED VALUE HERE');
+        const nBand = await Band.create({name: 'Nirvana', genre: 'Punk Rock'})
+        const updatedBand = await nBand.update(
+            {
+                genre: 'Alternative Rock'
+            }
+        )
+        expect(updatedBand.genre).toBe('Alternative Rock');
     })
 
     test('can update a Musician', async () => {
         // TODO - test updating a musician
-        expect('NO TEST').toBe('EXPECTED VALUE HERE');
+        const nMusician = await Musician.create({name: 'Beethoven', instrument: 'Horn'})
+        const updatedMusician = await nMusician.update(
+            {
+                instrument: 'Piano'
+            }
+        )
+        expect(updatedMusician.instrument).toBe('Piano');
+    })
+
+    test('can update a Song', async () => {
+        // TODO - test updating a musician
+        const nSong = await Song.create({title: 'Survivor', year: 2018, length: 3})
+        const updatedSong = await nSong.update(
+            {
+                title: 'Lost Soul Survivor'
+            }
+        )
+        expect(updatedSong.title).toBe('Lost Soul Survivor');
     })
 
     test('can delete a Band', async () => {
         // TODO - test deleting a band
-        expect('NO TEST').toBe('EXPECTED VALUE HERE');
+        const dBand = await Band.create({name: 'Aerosmith', genre: 'Rock'})
+        const noBand = await dBand.destroy()
+        expect(noBand).toBe(dBand);
     })
 
     test('can delete a Musician', async () => {
         // TODO - test deleting a musician
-        expect('NO TEST').toBe('EXPECTED VALUE HERE');
+        const dMusician = await Musician.create({name: 'Yo-Yo Ma', instrument: 'Chello'})
+        const noMusician = await dMusician.destroy()
+        expect(noMusician).toBe(dMusician);
+    })
+
+    test('can delete a Song', async () => {
+        // TODO - test deleting a musician
+        const dSong = await Song.create({title: 'Put it on me', year: 2022, length: 2})
+        const noSong = await dSong.destroy()
+        expect(noSong).toBe(dSong);
     })
 })
