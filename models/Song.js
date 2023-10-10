@@ -7,8 +7,9 @@ const {Sequelize, db, Model, DataTypes} = require('../db');
 class Song extends Model {};
 
 Song.init({
-    name: DataTypes.STRING, 
-    instrument: DataTypes.STRING
+    title: DataTypes.STRING, 
+    year: DataTypes.INTEGER, 
+    length: DataTypes.INTEGER
 },{
     sequelize: db,
     modelName: "Song"
