@@ -51,3 +51,45 @@ describe('Band, Musician, and Song Models', () => {
         expect(deletedMusician).toBe(foundMusician);
     })
 })
+
+
+
+describe('test associations', () => {
+
+
+    beforeAll(async () => {
+        await db.sync({ force: true });
+    });
+    
+    
+    //one to many
+    test('band has many musicians', async () => {
+        const Queen = await Band.create({name: "Queen", genre: "rock"});
+        const beet = await Musician.create({ name: "Beethovan", instrument: "Piano"});
+        const musician1 = await Musician.create({name: "Lindsey Sterling", instrument: "Violin"});
+        const bands = await Band.findAll();
+        const foundBand = await bands[0];
+        const musicians = await Musician.findAll();
+         await foundBand.setMusicians([musicians[0],musicians[1]]);
+        let bandsMusicians = await foundBand.getMusicians();
+        expect(bandsMusicians.length).toBe(2);
+    })
+
+    //many to many
+    test('songs has many bands and bands have many song', async () => {
+        const Queen = await Band.create({name: "Queen", genre: "rock"});
+        const fooFighters = await Band.create({name: "Foo Fighters", genre: "Rock"})
+        const vampireWeekend = await Band.create({ name: "Vampire Weekend",genre: "Indie"})
+        const twentySix = await Song.create({title: "26",year: 2018, length: 4})
+        const spiceGirl = await Song.create({title: "Spice Girl",year: 2018,length: 4})
+        //one band,multiple songs
+        await fooFighters.addSongs([twentySix,spiceGirl])
+        let fooSongs = await fooFighters.getSongs();
+        //one song,multiple bands
+        await spiceGirl.addBands([vampireWeekend,Queen]);
+        let spices = await spiceGirl.getBands();
+        expect(fooSongs.length).toBe(2);
+        expect(spices.length).toBe(3);
+    })
+})
+    
