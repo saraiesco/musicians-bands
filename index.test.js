@@ -58,44 +58,38 @@ describe('test associations', () => {
 
 
     beforeAll(async () => {
-    await db.sync({ force: true });
-        // const Queen = await Band.create({name: "Queen", genre: "rock"})
-        // const band = await Band.create({name: "Foo Fighters", genre: "Rock"})
-        // const band1 = await Band.create({ name: "Vampire Weekend",genre: "Indie"})
-        // const beet = await Musician.create({ name: "Beethovan", instrument: "Piano"})
-        // const musician1 = await Musician.create({name: "Lindsey Sterling", instrument: "Violin"})
-        // const song = await Song.create({title: "26",year: 2018, length: 4})
-        // const song1 = await Song.create({title: "Spice Girl",year: 2018,length: 4})
+        await db.sync({ force: true });
     });
     
     
     //one to many
     test('band has many musicians', async () => {
-        const Queen = await Band.create({name: "Queen", genre: "rock"})
-        const band1 = await Band.create({ name: "Vampire Weekend",genre: "Indie"})
-        const beet = await Musician.create({ name: "Beethovan", instrument: "Piano"})
-        const musician1 = await Musician.create({name: "Lindsey Sterling", instrument: "Violin"})
+        const Queen = await Band.create({name: "Queen", genre: "rock"});
+        const beet = await Musician.create({ name: "Beethovan", instrument: "Piano"});
+        const musician1 = await Musician.create({name: "Lindsey Sterling", instrument: "Violin"});
         const bands = await Band.findAll();
-        const foundBand = await bands[0]
+        const foundBand = await bands[0];
         const musicians = await Musician.findAll();
-        await foundBand.setMusicians(musicians[0],musicians[1])
+         await foundBand.setMusicians([musicians[0],musicians[1]]);
         let bandsMusicians = await foundBand.getMusicians();
-        console.log(JSON.stringify(bandsMusicians,null,2));
-        // expect().toBe();
+        expect(bandsMusicians.length).toBe(2);
     })
 
     //many to many
     test('songs has many bands and bands have many song', async () => {
-    // Band.create() to make some bands. Use the data you’ve added in previous tests you’ve created!
-    // Create at least 2 songs
-    // For one band, add both songs
-    // For each of the songs, use something like foundBand.getSongs() to check that they have been added correctly!
-
-    // Song.create() to make some songs. Use the data you’ve added in previous tests you’ve created!
-    // Create at least 2 bands
-    // For one song, add both bands
-    // For each of the bands, use something like foundSong.getBands() to check that they have been added correctly!
-        expect().toBe();
+        const Queen = await Band.create({name: "Queen", genre: "rock"});
+        const fooFighters = await Band.create({name: "Foo Fighters", genre: "Rock"})
+        const vampireWeekend = await Band.create({ name: "Vampire Weekend",genre: "Indie"})
+        const twentySix = await Song.create({title: "26",year: 2018, length: 4})
+        const spiceGirl = await Song.create({title: "Spice Girl",year: 2018,length: 4})
+        //one band,multiple songs
+        await fooFighters.setSongs([twentySix,spiceGirl])
+        let fooSongs = await fooFighters.getSongs();
+        //one song,multiple bands
+        await spiceGirl.setBands([vampireWeekend,Queen]);
+        let spices = await spiceGirl.getBands();
+        expect(fooSongs.length).toBe(2);
+        expect(spices.length).toBe(2);
     })
 })
     
