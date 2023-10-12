@@ -83,13 +83,13 @@ describe('test associations', () => {
         const twentySix = await Song.create({title: "26",year: 2018, length: 4})
         const spiceGirl = await Song.create({title: "Spice Girl",year: 2018,length: 4})
         //one band,multiple songs
-        await fooFighters.setSongs([twentySix,spiceGirl])
+        await fooFighters.addSongs([twentySix,spiceGirl])
         let fooSongs = await fooFighters.getSongs();
         //one song,multiple bands
-        await spiceGirl.setBands([vampireWeekend,Queen]);
+        await spiceGirl.addBands([vampireWeekend,Queen]);
         let spices = await spiceGirl.getBands();
         expect(fooSongs.length).toBe(2);
-        expect(spices.length).toBe(2);
+        expect(spices.length).toBe(3);
     })
 })
     
